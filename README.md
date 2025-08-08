@@ -112,4 +112,5 @@ Built with **Java 21**, **Spring Boot**, **MySQL**, and **React**.
 
 ### 👤 Author
 
-**Dimakatso M** – Full-stack Java Developer Test
+
+**Dimakatso M** – Full-stack Java Developer
