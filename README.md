@@ -1,48 +1,58 @@
 # 📚 Book Tracker App
 
 A simple full-stack application that allows users to add, view, update, and delete books.  
-Built with **Java 21**, **Spring Boot**, **MySQL**, and **React**.
+Built with **Java 21**, **Spring Boot**, **PostgreSQL**, and **React**.
 
 ---
 
 ## 🖥️ Tech Stack
 
-- **Backend:** Java 21, Spring Boot 3, MySQL, REST API
-- **Frontend:** React (Hooks + Axios)
-- **Database:** MySQL
+- **Backend:** Java 21, Spring Boot 3, PostgreSQL, REST API  
+- **Frontend:** React (Hooks + Axios)  
+- **Database:** PostgreSQL  
 
 ---
 
 ## 🔧 Features
 
-- ✅ List all books
-- ✅ Add a new book
-- ✅ Delete a book
-- ⚠️ Update book logic exists in the backend, but not yet wired in the frontend
+- ✅ List all books  
+- ✅ Add a new book  
+- ✅ Delete a book  
+- ⚠️ Update book logic exists in the backend, but not yet wired in the frontend  
 
 ---
 
-## 🛠️ Backend Setup (Spring Boot)
+## 🛠️ Backend Setup (Spring Boot + PostgreSQL)
 
 ### 📋 Requirements
-- Java 21
-- Maven
-- MySQL installed and running
+- Java 21  
+- Maven  
+- PostgreSQL installed and running *(or use Docker)*  
+
+---
 
 ### ⚙️ Step-by-step
 
-1. **Create the MySQL database**
+1. **Create the PostgreSQL database**
+
+   If running PostgreSQL locally:
    ```sql
    CREATE DATABASE bookdb;
    ```
 
+   Or start PostgreSQL with Docker:
+   ```bash
+   docker run --name postgres-bookdb -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=yourpassword -e POSTGRES_DB=bookdb -p 5432:5432 -d postgres
+   ```
+
 2. **Configure the connection in `application.properties`**
    ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/bookdb
-   spring.datasource.username=root
+   spring.datasource.url=jdbc:postgresql://localhost:5432/bookdb
+   spring.datasource.username=postgres
    spring.datasource.password=yourpassword
    spring.jpa.hibernate.ddl-auto=update
    spring.jpa.show-sql=true
+   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
    ```
 
 3. **Run the backend**
@@ -56,8 +66,10 @@ Built with **Java 21**, **Spring Boot**, **MySQL**, and **React**.
 ## 🌐 Frontend Setup (React)
 
 ### 📋 Requirements
-- Node.js
-- npm
+- Node.js  
+- npm  
+
+---
 
 ### ⚙️ Step-by-step
 
@@ -94,9 +106,7 @@ Built with **Java 21**, **Spring Boot**, **MySQL**, and **React**.
 
 ## ⚠️ Known Issues / Notes
 
-- No edit form UI yet – only add and delete.
-- CORS is enabled in backend for `http://localhost:3000`.
-- On book submission, React reloads the page using `window.location.reload()` for simplicity.
-- Frontend has no styling – feel free to enhance with Bootstrap or Tailwind.
-
-
+- No edit form UI yet – only add and delete.  
+- CORS is enabled in backend for `http://localhost:3000`.  
+- On book submission, React reloads the page using `window.location.reload()` for simplicity.  
+- Frontend has minimal styling – you can enhance with Bootstrap or Tailwind.  
