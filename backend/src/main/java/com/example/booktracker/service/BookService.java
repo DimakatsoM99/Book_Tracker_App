@@ -2,41 +2,29 @@ package com.example.booktracker.service;
 
 import com.example.booktracker.model.Book;
 import com.example.booktracker.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookService {
+    private final BookRepository repo;
 
-    @Autowired
-    private BookRepository bookRepository;
-
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public BookService(BookRepository repo) {
+        this.repo = repo;
     }
 
-    public Optional<Book> getBookById(Long id) {
-        return bookRepository.findById(id);
-    }
-
-    public Book createBook(Book book) {
-        return bookRepository.save(book);
-    }
-
-    public Optional<Book> updateBook(Long id, Book book) {
-        return bookRepository.findById(id).map(existing -> {
-            existing.setTitle(book.getTitle());
-            existing.setAuthor(book.getAuthor());
-            existing.setPublishedDate(book.getPublishedDate());
-            existing.setGenre(book.getGenre());
-            return bookRepository.save(existing);
+    public List<Book> getAllBooks() { return repo.findAll(); }
+    public Optional<Book> getById(Long id) { return repo.findById(id); }
+    public Book create(Book b) { return repo.save(b); }
+    public Optional<Book> update(Long id, Book b) {
+        return repo.findById(id).map(existing -> {
+            existing.setTitle(b.getTitle());
+            existing.setAuthor(b.getAuthor());
+            existing.setPublishedDate(b.getPublishedDate());
+            existing.setGenre(b.getGenre());
+            return repo.save(existing);
         });
     }
-
-    public void deleteBook(Long id) {
-        bookRepository.deleteById(id);
-    }
+    public void delete(Long id) { repo.deleteById(id); }
 }
