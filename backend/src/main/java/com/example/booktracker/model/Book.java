@@ -1,9 +1,11 @@
 package com.example.booktracker.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,10 +13,16 @@ public class Book {
 
     private String title;
     private String author;
+
+    @Column(name = "published_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate publishedDate;
+
     private String genre;
 
-    // Getters and setters
+    public Book() {}
+
+    // getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
