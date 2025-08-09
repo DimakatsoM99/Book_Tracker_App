@@ -99,18 +99,4 @@ Built with **Java 21**, **Spring Boot**, **MySQL**, and **React**.
 - On book submission, React reloads the page using `window.location.reload()` for simplicity.
 - Frontend has no styling – feel free to enhance with Bootstrap or Tailwind.
 
----
 
-## ✅ To-Do (Optional Improvements)
-
-- [ ] Add Edit feature to React frontend
-- [ ] Add UI validation
-- [ ] Improve table styles and form layout
-- [ ] Unit tests (JUnit for backend, Jest for frontend)
-
-
-
-### 👤 Author
-
-
-**Dimakatso M** – Full-stack Java Developer
