@@ -1,112 +1,110 @@
-# 📚 Book Tracker App
+BOOK TRACKER
+This is a full-stack microservices book management application built with Java Spring Boot and React. This application allows users to manage their personal book collection with full CRUD functionality.
 
-A simple full-stack application that allows users to add, view, update, and delete books.  
-Built with **Java 21**, **Spring Boot**, **PostgreSQL**, and **React**.
+🛠 Tech Stack
+Backend:
 
----
+Java 21
+Spring Boot 3.2.5
+Spring Data JPA
+PostgreSQL
+Maven
+Frontend:
 
-## 🖥️ Tech Stack
+React 18
+Axios for API calls
+CSS3 for styling
+📋 Features
+View all books - Display books in a clean table format
+Add new books - Create books with title, author, publication date, and genre
+Edit books - Update existing book information
+Delete books - Remove books from collection
+Input validation - Required fields and business logic validation
+Responsive design - Works on desktop and mobile devices
+🚀 Getting Started
+Prerequisites:
 
-- **Backend:** Java 21, Spring Boot 3, PostgreSQL, REST API  
-- **Frontend:** React (Hooks + Axios)  
-- **Database:** PostgreSQL  
+Make sure you have the following installed:
 
----
+Java 21 or higher
+Maven 3.8+
+Node.js 18+ and npm
+PostgreSQL 12+
+Database Setup
+# Ubuntu/Debian
+sudo apt install postgresql postgresql-contrib
+sudo systemctl start postgresql  # Linux
+# Connect to PostgreSQL
+sudo -u postgres psql
 
-## 🔧 Features
+# Create user and database
+CREATE USER booktracker_user WITH PASSWORD 'your_password';
+CREATE DATABASE booktracker OWNER booktracker_user;
+GRANT ALL PRIVILEGES ON DATABASE booktracker TO booktracker_user;
 
-- ✅ List all books  
-- ✅ Add a new book  
-- ✅ Delete a book  
-- ⚠️ Update book logic exists in the backend, but not yet wired in the frontend  
+# Exit PostgreSQL
+\q
+Database Schema: The application uses JPA with hibernate.ddl-auto=update, so tables will be created automatically when you first run the backend.
 
----
+Backend Setup (Springboot)
+Navigate to backend directory
 
-## 🛠️ Backend Setup (Spring Boot + PostgreSQL)
+cd backend
+Configure database connection in src/main/resources/application.properties
 
-### 📋 Requirements
-- Java 21  
-- Maven  
-- PostgreSQL installed and running *(or use Docker)*  
+server.port=8080
 
----
+# Database Configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/booktracker
+spring.datasource.username=booktracker_user
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=org.postgresql.Driver
 
-### ⚙️ Step-by-step
+# JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+Install dependencies and run:
 
-1. **Create the PostgreSQL database**
+# Compile and run the application
+mvn spring-boot:run
 
-   If running PostgreSQL locally:
-   ```sql
-   CREATE DATABASE bookdb;
-   ```
+# Alternative: Build JAR and run
+mvn clean package
+java -jar target/book-tracker-backend-1.0.0.jar
+Verify backend is running:
 
-   Or start PostgreSQL with Docker:
-   ```bash
-   docker run --name postgres-bookdb -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=yourpassword -e POSTGRES_DB=bookdb -p 5432:5432 -d postgres
-   ```
+Backend should start on http://localhost:8080
 
-2. **Configure the connection in `application.properties`**
-   ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/bookdb
-   spring.datasource.username=postgres
-   spring.datasource.password=yourpassword
-   spring.jpa.hibernate.ddl-auto=update
-   spring.jpa.show-sql=true
-   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-   ```
+Test API: curl http://localhost:8080/api/books
 
-3. **Run the backend**
-   ```bash
-   cd backend
-   mvn spring-boot:run
-   ```
+Should return [] (empty array) initially
 
----
+Frontend setup
+Navigate to frontend directory
 
-## 🌐 Frontend Setup (React)
+cd frontend
+Start the development server
 
-### 📋 Requirements
-- Node.js  
-- npm  
+npm start
+Access the application:
 
----
+Frontend will open automatically at http://localhost:3000
 
-### ⚙️ Step-by-step
+If not, navigate to http://localhost:3000
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
+Sample API Usage:
+create a book
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+curl -X POST http://localhost:8080/api/books \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "test_title",
+    "author": "test_author",
+    "publishedDate": "1925-04-10",
+    "genre": "test_genre"
+  }'
+get all books
 
-3. Start the React development server:
-   ```bash
-   npm start
-   ```
-
-4. App will run on `http://localhost:3000` and connect to the backend at `http://localhost:8080`.
-
----
-
-## 📌 API Endpoints (Spring Boot)
-
-| Method | Endpoint            | Description         |
-|--------|---------------------|---------------------|
-| GET    | `/api/books`        | List all books      |
-| GET    | `/api/books/{id}`   | Get book by ID      |
-| POST   | `/api/books`        | Add new book        |
-| PUT    | `/api/books/{id}`   | Update existing     |
-| DELETE | `/api/books/{id}`   | Delete book         |
-
----
-
-## ⚠️ Known Issues / Notes
-
-- No edit form UI yet – only add and delete.  
-- CORS is enabled in backend for `http://localhost:3000`.  
-- On book submission, React reloads the page using `window.location.reload()` for simplicity.  
-- Frontend has minimal styling – you can enhance with Bootstrap or Tailwind.  
+curl http://localhost:8080/api/books
