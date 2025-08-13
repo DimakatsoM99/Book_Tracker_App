@@ -1,0 +1,5 @@
+book\tracker\BookTrackerApp.class
+book\tracker\repository\BookRepository.class
+book\tracker\controller\BookController.class
+book\tracker\entity\Book.class
+book\tracker\service\BookService.class
